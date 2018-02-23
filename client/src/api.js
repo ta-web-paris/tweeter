@@ -30,4 +30,15 @@ export default {
       })
       .catch(errHandler);
   },
+
+  getSecret() {
+    return service
+      .get('/secret')
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  logout() {
+    delete axios.defaults.headers.common['Authorization'];
+  },
 };

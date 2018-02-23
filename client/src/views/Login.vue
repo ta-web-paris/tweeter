@@ -40,7 +40,8 @@ export default {
       this.error = null;
       api
         .login(this.username, this.password)
-        .then(() => {
+        .then(user => {
+          this.$root.user = user;
           this.$router.push('/');
         })
         .catch(err => {

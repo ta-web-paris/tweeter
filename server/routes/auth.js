@@ -52,7 +52,10 @@ router.post('/login', (req, res, next) => {
         // for the client, this is just a token, he knows that
         // he has to send it
         const token = jwt.encode(payload, config.jwtSecret);
-        res.json({ token });
+        res.json({
+          token,
+          name: user.name,
+        });
       }
     });
   } else {

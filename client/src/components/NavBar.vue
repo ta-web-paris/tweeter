@@ -27,7 +27,7 @@
 
     <div class="navbar-end">
       <div class="navbar-item">
-        <div class="field is-grouped">
+        <div class="field is-grouped" v-if="!$root.user">
           <p class="control">
             <router-link
               class="navbar-item" to="/login"
@@ -45,19 +45,41 @@
             </router-link>
           </p>
         </div>
+        <div class="field is-grouped" v-else>
+          <p class="control">
+            Hi {{ $root.user.name }}
+          </p>
+          <p class="control">
+            <a
+              class="navbar-item"
+              @click="logout"
+            >
+              Logout
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </nav>
 </template>
 
-
 <script>
+import api from '../api';
+
 export default {
   data() {
     return {
       isActive: false,
     };
+  },
+
+  methods: {
+    logout() {
+      api.logout();
+      this.$root.user = null;
+      this.$router.push('/login');
+    },
   },
 };
 </script>
