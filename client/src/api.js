@@ -24,9 +24,10 @@ export default {
         password,
       })
       .then(res => {
-        const { token } = res.data;
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-        return res.data;
+        const { data } = res;
+        localStorage.setItem('user', JSON.stringify(data));
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
+        return data;
       })
       .catch(errHandler);
   },
@@ -40,5 +41,17 @@ export default {
 
   logout() {
     delete axios.defaults.headers.common['Authorization'];
+    localStorage.removeItem('user');
+  },
+
+  loadUser() {
+    const userData = localStorage.getItem('user');
+    if (!userData) return false;
+    const user = JSON.parse(userData);
+    if (user.token && user.name) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
+      return user;
+    }
+    return false;
   },
 };
