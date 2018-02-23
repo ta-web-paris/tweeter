@@ -1,12 +1,10 @@
 <template>
   <div id="app">
+    <NavBar/>
     <section class="section">
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
-      </div>
       <router-view/>
     </section>
+
     <footer class="footer">
       <div class="container">
         <div class="content has-text-centered">
@@ -17,3 +15,11 @@
     </footer>
   </div>
 </template>
+
+<script>
+import NavBar from './components/NavBar';
+export default {
+  components: { NavBar },
+};
+</script>
+
