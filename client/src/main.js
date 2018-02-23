@@ -1,10 +1,13 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+import Vue from 'vue';
+import Buefy from 'buefy';
+import 'buefy/lib/buefy.css';
+import App from './App.vue';
+import router from './router';
 
-Vue.config.productionTip = false
+Vue.use(Buefy);
+Vue.config.productionTip = false;
 
 new Vue({
   router,
-  render: h => h(App)
-}).$mount('#app')
+  render: h => h(App),
+}).$mount('#app');
