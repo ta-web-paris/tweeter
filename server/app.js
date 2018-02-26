@@ -12,6 +12,7 @@ const User = require('./models/user');
 const config = require('./config');
 const { Strategy, ExtractJwt } = require('passport-jwt');
 const cors = require('cors');
+const history = require('express-history-api-fallback');
 
 var app = express();
 
@@ -51,7 +52,7 @@ const strategy = new Strategy(
 // tell pasport to use it
 passport.use(strategy);
 
-app.use('/', require('./routes/index'));
+// app.use('/', require('./routes/index'));
 app.use('/api', require('./routes/auth'));
 
 app.get(
@@ -64,6 +65,10 @@ app.get(
     res.json(req.user);
   }
 );
+
+const clientRoot = path.join(__dirname, '../client/dist');
+app.use('/', express.static(clientRoot));
+app.use(history('index.html', { root: clientRoot }));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
