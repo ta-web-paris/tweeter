@@ -1,10 +1,11 @@
+require('dotenv').config();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/tweeter');
+mongoose.connect(process.env.MONGODB_URI);
 
 const passport = require('passport');
 const User = require('./models/user');
