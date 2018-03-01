@@ -13,6 +13,20 @@
           <b-input maxlength="30" v-model="username" required icon="account"></b-input>
       </b-field>
 
+      <b-field>
+        <b-upload v-model="files">
+            <a class="button is-primary">
+                <b-icon icon="upload"></b-icon>
+                <span>Click to upload</span>
+            </a>
+        </b-upload>
+        <div v-if="files && files.length">
+            <span class="file-name">
+                {{ files[0].name }}
+            </span>
+        </div>
+      </b-field>
+
       <b-field label="Password">
           <b-input type="password"
             required
@@ -35,6 +49,7 @@ export default {
       name: '',
       username: '',
       password: '',
+      files: [],
 
       error: null,
     };
@@ -47,6 +62,7 @@ export default {
           name: this.name,
           username: this.username,
           password: this.password,
+          picture: this.files[0],
         })
         .then(() => {
           this.$router.push('/login');

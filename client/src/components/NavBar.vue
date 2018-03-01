@@ -48,6 +48,9 @@
         <div class="field is-grouped" v-else>
           <p class="control">
             Hi {{ $root.user.name }}
+            <figure class="image is-24x24">
+              <img :src="$root.user.picture">
+            </figure>
           </p>
           <p class="control">
             <a

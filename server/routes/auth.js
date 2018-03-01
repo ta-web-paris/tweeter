@@ -5,14 +5,27 @@ const jwt = require('jwt-simple');
 const passport = require('passport');
 const config = require('../config');
 
-router.post('/signup', (req, res, next) => {
+const cloudinary = require('cloudinary');
+const cloudinaryStorage = require('multer-storage-cloudinary');
+const multer = require('multer');
+
+const storage = cloudinaryStorage({
+  cloudinary,
+  folder: 'my-images',
+  allowedFormats: ['jpg', 'png', 'gif'],
+});
+
+const parser = multer({ storage });
+
+router.post('/signup', parser.single('picture'), (req, res, next) => {
   // extract the info we need from the body
   // of the request
   const { username, name, password } = req.body;
-
+  const { file } = req;
   const user = new User({
     username,
     name,
+    picture: file.secure_url,
   });
 
   User.register(user, password, err => {
@@ -55,6 +68,7 @@ router.post('/login', (req, res, next) => {
         res.json({
           token,
           name: user.name,
+          picture: user.picture,
         });
       }
     });

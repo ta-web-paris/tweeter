@@ -11,8 +11,14 @@ const errHandler = err => {
 
 export default {
   signup(userInfo) {
+    const formData = new FormData();
+    Object.keys(userInfo).forEach(key => formData.append(key, userInfo[key]));
     return service
-      .post('/signup', userInfo)
+      .post('/signup', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then(res => res.data)
       .catch(errHandler);
   },
